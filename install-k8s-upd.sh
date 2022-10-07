@@ -89,7 +89,7 @@ sudo systemctl restart docker
 
 cwd=$(pwd)
 sudo yum clean all && sudo yum -y makecache
-cd $pwd/pkgs
+cd $cwd/pkgs
 
 tar -xvf Kubelet.tar.gz
 cd kubelet
