@@ -87,9 +87,9 @@ sudo systemctl restart docker
 #gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 #EOF
 
-
+cwd=$(pwd)
 sudo yum clean all && sudo yum -y makecache
-cd /home/k8suser/pkgs
+cd $pwd/pkgs
 
 tar -xvf Kubelet.tar.gz
 cd kubelet
@@ -134,7 +134,7 @@ sudo sysctl --system
 #These commands should be run on masternode only
 
 if [ $1 == "master" ]; then
-    cd /home/k8suser/pkgs/docker-images/calico
+    cd $cwd/pkgs/docker-images/calico
 
     docker load -i cni.v3.15.5.tar
     docker load -i kube-controllers.v3.15.5.tar
@@ -144,7 +144,7 @@ if [ $1 == "master" ]; then
     cd ..
     docker load -i  debian.latest.tar
 
-    cd /home/k8suser/pkgs/docker-images/k8s.gcr.io
+    cd $cwd/pkgs/docker-images/k8s.gcr.io
     docker load -i api.tar
     docker load -i controller.tar
     docker load -i coredns.1.7.0.tar
@@ -169,7 +169,7 @@ if [ $1 == "master" ]; then
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
     #install calico plugin
-    cd /home/k8suser/pkgs
+    cd $cwd/pkgs
     kubectl apply -f calico.yaml
 
 
