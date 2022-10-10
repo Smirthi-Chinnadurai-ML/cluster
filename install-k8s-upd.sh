@@ -130,6 +130,15 @@ EOF
 
 sudo sysctl --system
 
+if [ $1 == "worker" ]; then
+    cd $cwd/pkgs/docker-images/calico
+    docker load -i node.v3.15.5.tar
+    
+    cd $cwd/pkgs/docker-images/k8s.gcr.io
+    docker load -i proxy.tar
+
+fi
+
 
 #These commands should be run on masternode only
 
