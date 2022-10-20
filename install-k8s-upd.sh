@@ -1,4 +1,4 @@
-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#!/bin/bash
+#!/bin/bash
 
 # Possible enhancements on this script:
 # 1. Add logic to add hostname and IP in /etc/hosts on worker and master.
