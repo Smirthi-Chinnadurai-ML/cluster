@@ -1,4 +1,4 @@
-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#!/bin/bash
+#!/bin/bash
 
 # Possible enhancements on this script:
 # 1. Add logic to add hostname and IP in /etc/hosts on worker and master.
@@ -89,7 +89,7 @@ sudo systemctl restart docker
 
 cwd=$(pwd)
 sudo yum clean all && sudo yum -y makecache
-cd $cwd/pkgs
+cd $cwd
 
 tar -xvf Kubelet.tar.gz
 cd kubelet
@@ -131,10 +131,10 @@ EOF
 sudo sysctl --system
 
 if [ $1 == "worker" ]; then
-    cd $cwd/pkgs/docker-images/calico
+    cd $cwd/docker-images/calico
     docker load -i node.v3.15.5.tar
     
-    cd $cwd/pkgs/docker-images/k8s.gcr.io
+    cd $cwd/docker-images/k8s.gcr.io
     docker load -i proxy.tar
 
 fi
@@ -143,7 +143,7 @@ fi
 #These commands should be run on masternode only
 
 if [ $1 == "master" ]; then
-    cd $cwd/pkgs/docker-images/calico
+    cd $cwd/docker-images/calico
 
     docker load -i cni.v3.15.5.tar
     docker load -i kube-controllers.v3.15.5.tar
@@ -153,7 +153,7 @@ if [ $1 == "master" ]; then
     cd ..
     docker load -i  debian.latest.tar
 
-    cd $cwd/pkgs/docker-images/k8s.gcr.io
+    cd $cwd/docker-images/k8s.gcr.io
     docker load -i api.tar
     docker load -i controller.tar
     docker load -i coredns.1.7.0.tar
@@ -178,7 +178,7 @@ if [ $1 == "master" ]; then
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
     #install calico plugin
-    cd $cwd/pkgs
+    cd $cwd
     kubectl apply -f calico.yaml
 
 
